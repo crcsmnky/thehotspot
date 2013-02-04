@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span10 offset1">
+        <h1>All Categories <small>sorted by places</small></h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10 offset1">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Categories</th>
+                    <th>Places</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in categories %}
+                    <tr>
+                        <td><a href="/categories/{{ c._id }}">{{ c.name }}</a></td>
+                        <td>{{ c.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4 offset4">
+        <ul class="pager">
+            {% if skip == 0 %}
+                <li class="previous disabled"><a href="#">&larr; Previous</a></li>
+            {% else %}
+                <li class="previous"><a href="/categories/all?skip={{ skip - 10}}">&larr; Previous</a></li>
+            {% endif %}
+            {% if skip+10 >= count %}
+                <li class="next disabled"><a href="#">&rarr; Next</a></li>
+            {% else %}
+                <li class="next"><a href="/categories/all?skip={{ skip + 10}}">&rarr; Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock body %}

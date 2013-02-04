@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span10 offset1">
+        <h1>{{ category.name }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span6 offset1">
+        <h3>Places</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Place</th>
+                    <th>Checkins</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in places %}
+                    <tr>
+                        <td><a href="/places/{{ p._id }}">{{ p.name }}</a> <small>{{ p.address }}</small></td>
+                        <td>{{ p.checkins }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <h3>Map</h3>
+        <img src="http://maps.googleapis.com/maps/api/staticmap?markers={% for p in mapped %}{{ p.address }}+{{ p.locality }}+{{ p.region }}+{{ p.postcode }}%7C{% endfor %}&zoom=12&size=400x450&sensor=false" alt="{{ category.name }} places">
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4 offset4">
+        <ul class="pager">
+            {% if skip == 0 %}
+                <li class="previous disabled"><a href="#">&larr; Previous</a></li>
+            {% else %}
+                <li class="previous"><a href="/categories/{{ category._id }}?skip={{ skip - 10}}">&larr; Previous</a></li>
+            {% endif %}
+            {% if skip+10 >= count %}
+                <li class="next disabled"><a href="#">&rarr; Next</a></li>
+            {% else %}
+                <li class="next"><a href="/categories/{{ category._id }}?skip={{ skip + 10}}">&rarr; Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock body %}

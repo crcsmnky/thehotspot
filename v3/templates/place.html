@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span12">
+        <h1>{{ place.name }}</h1>
+        <address>
+            {{ place.address }}<br>
+            {{ place.locality }}, {{ place.region }} {{ place.postcode }}
+        </address>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4">
+        <h3>Recent checkins</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Checkin Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in checkins %}
+                    <tr>
+                        <td><a href="/users/{{ c.user_id}}">{{ users[c.user_id].firstname }} {{ users[c.user_id].lastname }}</a></td>
+                        <td>{{ c.datetime.strftime("%a %b %d %Y %I:%M %p") }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="span4">
+        <h3>Nearby Places</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Place</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in places %}
+                    <tr>
+                        <td><a href="{{ p._id }}">{{ p.name }}</a> {{ p.address }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="span4">
+        <h3>Map</h3>
+        <img src="http://maps.googleapis.com/maps/api/staticmap?{% for n in nearby %}&markers=color:blue%7C{{n.location[0]}},{{n.location[1]}}{% endfor %}&markers={{ place.location[0] }},{{ place.location[1] }}&zoom=15&size=400x450&sensor=false" alt="{{ place.name }}">
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h3>Checkins Per Day of the Week</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for stat in stats|dictsort  %}
+                        <td>{{ stat[1] }}</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

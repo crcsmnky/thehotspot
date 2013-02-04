@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span10 offset1">
+        <h1>All Checkins <small>sorted by date</small></h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10 offset1">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Place</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in checkins %}
+                    {% set u = users[c.user_id] %}
+                    {% set p = places[c.place_id] %}
+                    <tr>
+                        <td><a href="/users/{{ u._id }}">{{ u.firstname }} {{ u.lastname }}</a></td>
+                        <td><a href="/places/{{ p._id }}">{{p.name}}</a> <small>{{ p.address }}, {{ p.locality }}, {{ p.region }} {{ p.postcode }}</small></td>
+                        <td>{{ c.datetime.strftime("%a %b %d %Y %I:%M %p") }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4 offset4">
+        <ul class="pager">
+            {% if skip == 0 %}
+                <li class="previous disabled"><a href="#">&larr; Previous</a></li>
+            {% else %}
+                <li class="previous"><a href="/checkins/all?skip={{ skip - 10}}">&larr; Previous</a></li>
+            {% endif %}
+            {% if skip+10 >= count %}
+                <li class="next disabled"><a href="#">&rarr; Next</a></li>
+            {% else %}
+                <li class="next"><a href="/checkins/all?skip={{ skip + 10}}">&rarr; Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock body %}
