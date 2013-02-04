@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endwith %}
+
+<div class="row">
+    <div class="span10 offset1">
+        <h1>Add A New Checkin</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span10 offset1">
+        <form method="post" class="form-inline">
+            <legend>Select a user and select a place, then <strong>check in</strong>!</legend>
+            <label for="userSelect">User</label>
+            <select name="user_id" id="userSelect">
+                {% for u in users %}
+                    <option value="{{ u._id }}">{{ u.firstname }} {{ u.lastname }}</option>
+                {% endfor %}
+            </select>
+            <label for="placeSelect">Place</label>
+            <select name="place_id" id="placeSelect">
+                {% for p in places %}
+                    <option value="{{ p._id }}">{{ p.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn">Check In</button>
+        </form>
+    </div>
+</div>
+
+{% endblock body %}

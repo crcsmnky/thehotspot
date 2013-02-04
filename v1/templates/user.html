@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span10 offset1">
+        <h1>{{ user.firstname }} {{user.lastname }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span6 offset1">
+        <h3>Recent checkins</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Place</th>
+                    <th>Checkin Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in checkins %}
+                    {% set p = places[c.place_id] %}
+                    <tr>
+                        <td><a href="/places/{{ p._id }}">{{ p.name }}</a> <small>{{ p.address }}</small></td>
+                        <td>{{ c.datetime.strftime("%a %b %d %Y %I:%M %p") }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <h3>Map</h3>
+        <img src="http://maps.googleapis.com/maps/api/staticmap?markers={% for pid,p in places.items() %}{{ p.address }}+{{ p.locality }}+{{ p.region }}+{{ p.postcode }}%7C{% endfor %}&zoom=13&size=400x450&sensor=false" alt="{{ user.firstname }}'s checkins">
+    </div>
+</div>
+
+{% endblock %}

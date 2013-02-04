@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="row">
+    <div class="span5 offset1">
+        <h1>The Hot Spot</h1>
+        <p>
+            Welcome to The Hot Spot. Check out the leaderboards to see who's checking in the most and the best places to hang out in San Francisco, CA.
+        </p>
+    </div>
+    <div class="span5">
+        <p>
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center=San+Francisco,CA&zoom=14&size=480x200&scale=1&sensor=false" alt="San Francisco, CA">
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span5 offset1">
+        <div class="well well-small">
+            <h3>Top Places</h3>
+            <ol>
+            {% for place in topplaces %}
+                <li><a href="/places/{{ place._id }}">{{ place.name }}</a> ({{ place.checkins }})</li>
+            {% endfor %}
+            </ol>
+        </div>
+    </div>
+    <div class="span5">
+        <div class="well well-small">
+            <h3>Top Users</h3>
+            <ol>
+            {% for user in topusers %}
+                <li><a href="/users/{{ user._id }}">{{ user.firstname }} {{ user.lastname }}</a> ({{ user.checkins }})</li>
+            {% endfor %}
+            </ol>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
