@@ -1,6 +1,6 @@
 # The Hot Spot
 
-This is a sample application that I developed as part of a presentation on building apps using MongoDB. The app is a checkin application. The data was pulled from the [Factual places API](http://www.factual.com/data-apis/places) and I generated checkins for 50 sample users over the span of 1 month.
+This is a sample application that I developed as part of a presentation on building apps using [MongoDB](http://www.mongodb.org). The app is a checkin application. The data was pulled from the [Factual places API](http://www.factual.com/data-apis/places) and I generated checkins for 50 sample users over the span of 1 month.
 
 There are three versions of the app, each with increasingly more functionality:
 
@@ -11,6 +11,6 @@ There are three versions of the app, each with increasingly more functionality:
 ## Setup
 
 * Get yourself a working [MongoDB](http://www.mongodb.org) setup (I used [MongoHQ](http://www.mongohq.com))
-* Use `sampledata/data.py` to pull data from Factual and create places, users, and checkins
-* Note: Each version is an independent application in case you want to deploy them individually
+* Use `sampledata/data.py` to pull data from [Factual](http://www.factual.com), create places and users, and generate checkins
+* *Note*: Each version is an independent application in case you want to deploy them individually
 * Run `pip install -r requirements.txt` and run the app with `python app.py`
